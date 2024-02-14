@@ -1,0 +1,1 @@
+# example-kserve-custom-model
