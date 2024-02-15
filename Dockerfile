@@ -28,4 +28,4 @@ COPY . /app
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
-CMD python -m model
+ENTRYPOINT ["python", "-m", "model"]

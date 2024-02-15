@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import argparse
 from typing import Dict, Union
-from kserve import Model, ModelServer, InferRequest, InferOutput, InferResponse
+from kserve import Model, ModelServer, model_server, InferRequest, InferOutput, InferResponse
 from kserve.utils.utils import generate_uuid
 
 
@@ -34,7 +35,12 @@ class ExampleModel(Model):
         infer_response = InferResponse(model_name=self.name, infer_outputs=[infer_output], response_id=response_id)
         return infer_response
 
+parser = argparse.ArgumentParser(parents=[model_server.parser])
+parser.add_argument(
+    "--model_name", help="The name that the model is served under."
+)
+args, _ = parser.parse_known_args()
 
 if __name__ == "__main__":
-    model = ExampleModel("model")
+    model = ExampleModel(args.model_name)
     ModelServer().start([model])
